@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'learn_screen.dart';
+import 'practice_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -24,365 +26,390 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ─────────────────────────────
-              // GREETING
-              // ─────────────────────────────
-              const Text(
-                'नमस्ते, Hasit 👋',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
-                  color: brown,
-                ),
-              ),
-
-              const SizedBox(height: 4),
-
-              Text(
-                'Continue your Sanskrit journey.',
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-              ),
-
-              const SizedBox(height: 18),
-
-              // ─────────────────────────────
-              // AUSPICIOUS CARD
-              // ─────────────────────────────
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 18,
-                  vertical: 16,
-                ),
-                decoration: BoxDecoration(
-                  color: card,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: const Color(0x66C79B45)),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x10000000),
-                      blurRadius: 15,
-                      offset: Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Row(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Expanded(
+                    // ─────────────────────────────
+                    // GREETING
+                    // ─────────────────────────────
+                    const Text(
+                      'नमस्ते, Hasit 👋',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                        color: brown,
+                      ),
+                    ),
+
+                    const SizedBox(height: 4),
+
+                    Text(
+                      'Continue your Sanskrit journey.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+
+                    const SizedBox(height: 18),
+
+                    // ─────────────────────────────
+                    // AUSPICIOUS CARD
+                    // ─────────────────────────────
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: card,
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(color: const Color(0x66C79B45)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x10000000),
+                            blurRadius: 15,
+                            offset: Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'शुभं भवतु',
+                                  style: TextStyle(fontSize: 22, color: blue),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  'May it be auspicious — a greeting for study',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Color(0xFF77716A),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(
+                            width: 58,
+                            height: 58,
+                            child: HomeMandala(),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 28),
+
+                    // ─────────────────────────────
+                    // DAILY STREAK HEADER
+                    // ─────────────────────────────
+                    const SectionHeader(
+                      deva: 'दैनिक अभ्यासः',
+                      english: 'Daily streak',
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // ─────────────────────────────
+                    // STREAK CARD
+                    // ─────────────────────────────
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        color: const Color(0x18E7A13B),
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(color: const Color(0x66E7A13B)),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: const Color(0x18C66A45),
+                                  borderRadius: BorderRadius.circular(17),
+                                ),
+                                child: const Icon(
+                                  Icons.local_fire_department_rounded,
+                                  size: 30,
+                                  color: terracotta,
+                                ),
+                              ),
+
+                              const SizedBox(width: 12),
+
+                              const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '7 Day Streak',
+                                    style: TextStyle(
+                                      fontSize: 21,
+                                      fontWeight: FontWeight.w600,
+                                      color: brown,
+                                    ),
+                                  ),
+                                  SizedBox(height: 2),
+                                  Text(
+                                    'Keep your अभ्यास going!',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Color(0xFF77716A),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 22),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _DayIndicator(day: 'M', active: true),
+                              _DayIndicator(day: 'T', active: true),
+                              _DayIndicator(day: 'W', active: true),
+                              _DayIndicator(day: 'T', active: true),
+                              _DayIndicator(day: 'F', active: true),
+                              _DayIndicator(day: 'S', active: true),
+                              _DayIndicator(day: 'S', active: true),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 28),
+
+                    // ─────────────────────────────
+                    // TODAY'S PRACTICE
+                    // ─────────────────────────────
+                    const SectionHeader(
+                      deva: 'अद्य अभ्यासः',
+                      english: "Today's practice",
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        color: card,
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(color: border),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0D000000),
+                            blurRadius: 15,
+                            offset: Offset(0, 5),
+                          ),
+                        ],
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'शुभं भवतु',
-                            style: TextStyle(fontSize: 22, color: blue),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'May it be auspicious — a greeting for study',
+                            "TODAY'S FOCUS",
                             style: TextStyle(
-                              fontSize: 11,
-                              color: Color(0xFF77716A),
+                              fontSize: 10,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+
+                          const SizedBox(height: 6),
+
+                          const Text(
+                            'मूर्धन्य ध्वनियाँ',
+                            style: TextStyle(fontSize: 25, color: brown),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          Text(
+                            'Retroflex sounds',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+
+                          const SizedBox(height: 18),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '$completed / $total exercises completed',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                              Text(
+                                '$percentage%',
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                  color: brown,
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 7),
+
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: 8,
+                              color: const Color(0xFFE6E0D6),
+                              child: FractionallySizedBox(
+                                alignment: Alignment.centerLeft,
+                                widthFactor: completed / total,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFE7A13B),
+                                        Color(0xFFD78828),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 18),
+
+                          SizedBox(
+                            width: double.infinity,
+                            height: 48,
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const PracticeScreen(),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.mic_rounded, size: 18),
+                              label: const Text(
+                                'Continue Practice',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: saffron,
+                                foregroundColor: const Color(0xFF332719),
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(17),
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
 
-                    const SizedBox(width: 58, height: 58, child: HomeMandala()),
-                  ],
-                ),
-              ),
+                    const SizedBox(height: 32),
 
-              const SizedBox(height: 28),
+                    // ─────────────────────────────
+                    // SEPARATOR
+                    // ─────────────────────────────
+                    const GoldSeparator(),
 
-              // ─────────────────────────────
-              // DAILY STREAK HEADER
-              // ─────────────────────────────
-              const SectionHeader(
-                deva: 'दैनिक अभ्यासः',
-                english: 'Daily streak',
-              ),
+                    const SizedBox(height: 28),
 
-              const SizedBox(height: 10),
+                    // ─────────────────────────────
+                    // QUICK LEARNING
+                    // ─────────────────────────────
+                    const SectionHeader(
+                      deva: 'शीघ्र अध्ययनम्',
+                      english: 'Quick learning',
+                    ),
 
-              // ─────────────────────────────
-              // STREAK CARD
-              // ─────────────────────────────
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: const Color(0x18E7A13B),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: const Color(0x66E7A13B)),
-                ),
-                child: Column(
-                  children: [
-                    Row(
+                    const SizedBox(height: 12),
+
+                    GridView.count(
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 1.05,
                       children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: const Color(0x18C66A45),
-                            borderRadius: BorderRadius.circular(17),
-                          ),
-                          child: const Icon(
-                            Icons.local_fire_department_rounded,
-                            size: 30,
-                            color: terracotta,
-                          ),
-                        ),
-
-                        const SizedBox(width: 12),
-
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '7 Day Streak',
-                              style: TextStyle(
-                                fontSize: 21,
-                                fontWeight: FontWeight.w600,
-                                color: brown,
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Text(
-                              'Keep your अभ्यास going!',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Color(0xFF77716A),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 22),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _DayIndicator(day: 'M', active: true),
-                        _DayIndicator(day: 'T', active: true),
-                        _DayIndicator(day: 'W', active: true),
-                        _DayIndicator(day: 'T', active: true),
-                        _DayIndicator(day: 'F', active: true),
-                        _DayIndicator(day: 'S', active: true),
-                        _DayIndicator(day: 'S', active: true),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 28),
-
-              // ─────────────────────────────
-              // TODAY'S PRACTICE
-              // ─────────────────────────────
-              const SectionHeader(
-                deva: 'अद्य अभ्यासः',
-                english: "Today's practice",
-              ),
-
-              const SizedBox(height: 10),
-
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: card,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: border),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x0D000000),
-                      blurRadius: 15,
-                      offset: Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "TODAY'S FOCUS",
-                      style: TextStyle(
-                        fontSize: 10,
-                        letterSpacing: 2,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-
-                    const SizedBox(height: 6),
-
-                    const Text(
-                      'मूर्धन्य ध्वनियाँ',
-                      style: TextStyle(fontSize: 25, color: brown),
-                    ),
-
-                    const SizedBox(height: 2),
-
-                    Text(
-                      'Retroflex sounds',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-
-                    const SizedBox(height: 18),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '$completed / $total exercises completed',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey.shade600,
-                          ),
-                        ),
-                        Text(
-                          '$percentage%',
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: brown,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 7),
-
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        height: 8,
-                        color: const Color(0xFFE6E0D6),
-                        child: FractionallySizedBox(
-                          alignment: Alignment.centerLeft,
-                          widthFactor: completed / total,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFFE7A13B), Color(0xFFD78828)],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 18),
-
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          _showMessage(
+                        QuickLearningCard(
+                          icon: Icons.text_fields_rounded,
+                          title: 'Learn Letters',
+                          deva: 'अ आ इ ई…',
+                          onTap: () => Navigator.push(
                             context,
-                            'Practice screen coming next 🚀',
-                          );
-                        },
-                        icon: const Icon(Icons.mic_rounded, size: 18),
-                        label: const Text(
-                          'Continue Practice',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
+                            MaterialPageRoute(
+                              builder: (_) => const LearnScreen(),
+                            ),
                           ),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: saffron,
-                          foregroundColor: const Color(0xFF332719),
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(17),
+                        QuickLearningCard(
+                          icon: Icons.menu_book_rounded,
+                          title: 'Practice Words',
+                          deva: 'संस्कृत शब्दाः',
+                          onTap: () => _showMessage(
+                            context,
+                            'Practice Words coming next 🚀',
                           ),
                         ),
-                      ),
+                        QuickLearningCard(
+                          icon: Icons.description_outlined,
+                          title: 'Practice Shlokas',
+                          deva: 'श्लोक अभ्यासः',
+                          onTap: () => _showMessage(
+                            context,
+                            'Practice Shlokas coming next 🚀',
+                          ),
+                        ),
+                        QuickLearningCard(
+                          icon: Icons.auto_awesome,
+                          title: 'Pronunciation Test',
+                          deva: 'AI Evaluation',
+                          onTap: () => _showMessage(
+                            context,
+                            'Pronunciation Test coming next 🚀',
+                          ),
+                        ),
+                      ],
                     ),
+
+                    const SizedBox(height: 28),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 32),
-
-              // ─────────────────────────────
-              // SEPARATOR
-              // ─────────────────────────────
-              const GoldSeparator(),
-
-              const SizedBox(height: 28),
-
-              // ─────────────────────────────
-              // QUICK LEARNING
-              // ─────────────────────────────
-              const SectionHeader(
-                deva: 'शीघ्र अध्ययनम्',
-                english: 'Quick learning',
-              ),
-
-              const SizedBox(height: 12),
-
-              GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                childAspectRatio: 1.05,
-                children: [
-                  QuickLearningCard(
-                    icon: Icons.text_fields_rounded,
-                    title: 'Learn Letters',
-                    deva: 'अ आ इ ई…',
-                    onTap: () =>
-                        _showMessage(context, 'Learn Letters coming next 🚀'),
-                  ),
-                  QuickLearningCard(
-                    icon: Icons.menu_book_rounded,
-                    title: 'Practice Words',
-                    deva: 'संस्कृत शब्दाः',
-                    onTap: () =>
-                        _showMessage(context, 'Practice Words coming next 🚀'),
-                  ),
-                  QuickLearningCard(
-                    icon: Icons.description_outlined,
-                    title: 'Practice Shlokas',
-                    deva: 'श्लोक अभ्यासः',
-                    onTap: () => _showMessage(
-                      context,
-                      'Practice Shlokas coming next 🚀',
-                    ),
-                  ),
-                  QuickLearningCard(
-                    icon: Icons.auto_awesome,
-                    title: 'Pronunciation Test',
-                    deva: 'AI Evaluation',
-                    onTap: () => _showMessage(
-                      context,
-                      'Pronunciation Test coming next 🚀',
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 28),
-            ],
-          ),
+            ),
+            const _HomeNavigation(),
+          ],
         ),
       ),
     );
@@ -392,6 +419,86 @@ class HomeScreen extends StatelessWidget {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message)));
+  }
+}
+
+class _HomeNavigation extends StatelessWidget {
+  const _HomeNavigation();
+
+  @override
+  Widget build(BuildContext context) {
+    const items = [
+      (Icons.home_outlined, 'Home'),
+      (Icons.menu_book_outlined, 'Learn'),
+      (Icons.mic_none_outlined, 'Practice'),
+      (Icons.bar_chart_outlined, 'Progress'),
+      (Icons.person_outline, 'Profile'),
+    ];
+
+    return Container(
+      height: 74,
+      decoration: const BoxDecoration(
+        color: Color(0xFFFFFCF5),
+        border: Border(top: BorderSide(color: HomeScreen.border)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: items.indexed.map((entry) {
+          final selected = entry.$1 == 0;
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                borderRadius: BorderRadius.circular(18),
+                onTap: () => _openDestination(context, entry.$1),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 3,
+                  ),
+                  child: Icon(
+                    entry.$2.$1,
+                    size: 22,
+                    color: selected ? HomeScreen.blue : const Color(0xFF776B5D),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                entry.$2.$2,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: selected ? HomeScreen.blue : const Color(0xFF776B5D),
+                ),
+              ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  void _openDestination(BuildContext context, int index) {
+    if (index == 0) return;
+    if (index == 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const LearnScreen()),
+      );
+    } else if (index == 2) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const PracticeScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '${index == 3 ? 'Progress' : 'Profile'} is coming soon',
+          ),
+        ),
+      );
+    }
   }
 }
 
