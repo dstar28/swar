@@ -1,8 +1,45 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import 'practice_screen.dart';
+
+const Map<String, String> audioFiles = {
+  // Vowels
+  'अ': 'sounds/vowels/vowel_a.wav',
+  'आ': 'sounds/vowels/vowel_aa.wav',
+  'इ': 'sounds/vowels/vowel_i.wav',
+  'ई': 'sounds/vowels/vowel_ii.wav',
+  'उ': 'sounds/vowels/vowel_u.wav',
+  'ऊ': 'sounds/vowels/vowel_uu.wav',
+  'ऋ': 'sounds/vowels/vowel_r.wav',
+  'ए': 'sounds/vowels/vowel_e.wav',
+  'ऐ': 'sounds/vowels/vowel_ai.wav',
+  'ओ': 'sounds/vowels/vowel_o.wav',
+  'औ': 'sounds/vowels/vowel_au.wav',
+  'अं': 'sounds/vowels/anusvara.wav',
+  'अः': 'sounds/vowels/visarga.wav',
+
+  // Consonants
+  'घ': 'sounds/consonants/gha.wav',
+  'ख': 'sounds/consonants/kha.wav',
+  'छ': 'sounds/consonants/chha.wav',
+  'ज': 'sounds/consonants/ja.wav',
+  'झ': 'sounds/consonants/jha.wav',
+  'ड': 'sounds/consonants/da_retroflex.wav',
+  'ढ': 'sounds/consonants/dha_retroflex.wav',
+  'त': 'sounds/consonants/ta_dental.wav',
+  'थ': 'sounds/consonants/tha_dental.wav',
+  'ध': 'sounds/consonants/dha_dental.wav',
+  'न': 'sounds/consonants/na_dental.wav',
+  'ब': 'sounds/consonants/ba.wav',
+  'म': 'sounds/consonants/ma.wav',
+  'र': 'sounds/consonants/ra.wav',
+  'ल': 'sounds/consonants/la.wav',
+  'व': 'sounds/consonants/va.wav',
+  'श': 'sounds/consonants/sha.wav',
+};
 
 class LetterDetailScreen extends StatelessWidget {
   final String letter;
@@ -65,6 +102,7 @@ class LetterDetailScreen extends StatelessWidget {
                     _AudioCard(
                       label: 'Listen — $letter',
                       subtitle: 'Traditional articulation',
+                      audioPath: audioFiles[letter],
                     ),
                     const SizedBox(height: 24),
                     const _DetailSectionLabel(
@@ -300,14 +338,75 @@ class _DetailSectionLabel extends StatelessWidget {
   }
 }
 
-class _AudioCard extends StatelessWidget {
+class _AudioCard extends StatefulWidget {
   final String label;
   final String subtitle;
+  final String? audioPath;
 
-  const _AudioCard({required this.label, required this.subtitle});
+  const _AudioCard({
+    required this.label,
+    required this.subtitle,
+    this.audioPath,
+  });
+
+  @override
+  State<_AudioCard> createState() => _AudioCardState();
+}
+
+class _AudioCardState extends State<_AudioCard> {
+  final AudioPlayer _player = AudioPlayer();
+
+  bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _player.onPlayerComplete.listen((_) {
+      if (mounted) {
+        setState(() {
+          _isPlaying = false;
+        });
+      }
+    });
+  }
+
+  Future<void> _toggleAudio() async {
+    if (widget.audioPath == null) {
+      return;
+    }
+
+    if (_isPlaying) {
+      await _player.stop();
+
+      if (mounted) {
+        setState(() {
+          _isPlaying = false;
+        });
+      }
+
+      return;
+    }
+
+    await _player.play(AssetSource(widget.audioPath!));
+
+    if (mounted) {
+      setState(() {
+        _isPlaying = true;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final hasAudio = widget.audioPath != null;
+
     return Container(
       height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -318,56 +417,69 @@ class _AudioCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            width: 46,
-            height: 46,
-            decoration: const BoxDecoration(
-              color: LetterDetailScreen.blue,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.play_arrow_rounded,
-              color: Colors.white,
-              size: 29,
+          GestureDetector(
+            onTap: hasAudio ? _toggleAudio : null,
+            child: Container(
+              width: 46,
+              height: 46,
+              decoration: BoxDecoration(
+                color: hasAudio
+                    ? LetterDetailScreen.blue
+                    : const Color(0xFFBDB7AC),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                _isPlaying ? Icons.stop_rounded : Icons.play_arrow_rounded,
+                color: Colors.white,
+                size: 29,
+              ),
             ),
           ),
+
           const SizedBox(width: 12),
+
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  label,
+                  widget.label,
                   style: const TextStyle(
                     fontSize: 13,
                     color: LetterDetailScreen.brown,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+
                 const SizedBox(height: 3),
+
                 Text(
-                  subtitle,
+                  widget.subtitle,
                   style: const TextStyle(
                     fontSize: 11,
                     color: Color(0xFF77716A),
                   ),
                 ),
+
                 const SizedBox(height: 7),
-                const LinearProgressIndicator(
-                  value: 0,
+
+                LinearProgressIndicator(
+                  value: _isPlaying ? null : 0,
                   minHeight: 5,
-                  backgroundColor: Color(0x22A89572),
+                  backgroundColor: const Color(0x22A89572),
                   color: LetterDetailScreen.gold,
                 ),
               ],
             ),
           ),
+
           const SizedBox(width: 10),
-          const Icon(
+
+          Icon(
             Icons.volume_up_outlined,
             size: 18,
-            color: Color(0xFF776B5D),
+            color: hasAudio ? const Color(0xFF776B5D) : const Color(0xFFBDB7AC),
           ),
         ],
       ),
