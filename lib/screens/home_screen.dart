@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'learn_screen.dart';
 import 'practice_screen.dart';
+import '../widgets/bottom_nav.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -100,7 +101,6 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-
                           const SizedBox(
                             width: 58,
                             height: 58,
@@ -373,6 +373,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+
                         QuickLearningCard(
                           icon: Icons.menu_book_rounded,
                           title: 'Practice Words',
@@ -382,6 +383,7 @@ class HomeScreen extends StatelessWidget {
                             'Practice Words coming next 🚀',
                           ),
                         ),
+
                         QuickLearningCard(
                           icon: Icons.description_outlined,
                           title: 'Practice Shlokas',
@@ -391,6 +393,7 @@ class HomeScreen extends StatelessWidget {
                             'Practice Shlokas coming next 🚀',
                           ),
                         ),
+
                         QuickLearningCard(
                           icon: Icons.auto_awesome,
                           title: 'Pronunciation Test',
@@ -408,7 +411,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const _HomeNavigation(),
+
+            const BottomNav(currentIndex: 0),
           ],
         ),
       ),
@@ -419,86 +423,6 @@ class HomeScreen extends StatelessWidget {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message)));
-  }
-}
-
-class _HomeNavigation extends StatelessWidget {
-  const _HomeNavigation();
-
-  @override
-  Widget build(BuildContext context) {
-    const items = [
-      (Icons.home_outlined, 'Home'),
-      (Icons.menu_book_outlined, 'Learn'),
-      (Icons.mic_none_outlined, 'Practice'),
-      (Icons.bar_chart_outlined, 'Progress'),
-      (Icons.person_outline, 'Profile'),
-    ];
-
-    return Container(
-      height: 74,
-      decoration: const BoxDecoration(
-        color: Color(0xFFFFFCF5),
-        border: Border(top: BorderSide(color: HomeScreen.border)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items.indexed.map((entry) {
-          final selected = entry.$1 == 0;
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                borderRadius: BorderRadius.circular(18),
-                onTap: () => _openDestination(context, entry.$1),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 3,
-                  ),
-                  child: Icon(
-                    entry.$2.$1,
-                    size: 22,
-                    color: selected ? HomeScreen.blue : const Color(0xFF776B5D),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                entry.$2.$2,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: selected ? HomeScreen.blue : const Color(0xFF776B5D),
-                ),
-              ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  void _openDestination(BuildContext context, int index) {
-    if (index == 0) return;
-    if (index == 1) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LearnScreen()),
-      );
-    } else if (index == 2) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const PracticeScreen()),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '${index == 3 ? 'Progress' : 'Profile'} is coming soon',
-          ),
-        ),
-      );
-    }
   }
 }
 

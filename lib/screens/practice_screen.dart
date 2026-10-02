@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'learn_screen.dart';
+import '../widgets/bottom_nav.dart';
 
 class PracticeScreen extends StatefulWidget {
   const PracticeScreen({super.key});
@@ -112,7 +113,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                 ),
               ),
             ),
-            const _PracticeNavigation(),
+            const BottomNav(currentIndex: 2),
           ],
         ),
       ),
@@ -503,89 +504,6 @@ class _GoldSeparator extends StatelessWidget {
         Expanded(child: Divider(color: Color(0x66C79B45))),
       ],
     );
-  }
-}
-
-class _PracticeNavigation extends StatelessWidget {
-  const _PracticeNavigation();
-
-  @override
-  Widget build(BuildContext context) {
-    const items = [
-      (Icons.home_outlined, 'Home'),
-      (Icons.menu_book_outlined, 'Learn'),
-      (Icons.mic_none_outlined, 'Practice'),
-      (Icons.bar_chart_outlined, 'Progress'),
-      (Icons.person_outline, 'Profile'),
-    ];
-    return Container(
-      height: 74,
-      decoration: const BoxDecoration(
-        color: Color(0xFFFFFCF5),
-        border: Border(top: BorderSide(color: _PracticeScreenState.border)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items.indexed.map((entry) {
-          final selected = entry.$1 == 2;
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                borderRadius: BorderRadius.circular(18),
-                onTap: () => _openDestination(context, entry.$1),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 3,
-                  ),
-                  child: Icon(
-                    entry.$2.$1,
-                    size: 22,
-                    color: selected
-                        ? _PracticeScreenState.blue
-                        : const Color(0xFF776B5D),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                entry.$2.$2,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: selected
-                      ? _PracticeScreenState.blue
-                      : const Color(0xFF776B5D),
-                ),
-              ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  void _openDestination(BuildContext context, int index) {
-    if (index == 2) return;
-    if (index == 0) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-      );
-    } else if (index == 1) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LearnScreen()),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '${index == 3 ? 'Progress' : 'Profile'} is coming soon',
-          ),
-        ),
-      );
-    }
   }
 }
 
