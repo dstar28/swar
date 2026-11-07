@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'learn_screen.dart';
 import 'practice_screen.dart';
+import 'practice_words_screen.dart';
 import '../widgets/bottom_nav.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -378,9 +379,11 @@ class HomeScreen extends StatelessWidget {
                           icon: Icons.menu_book_rounded,
                           title: 'Practice Words',
                           deva: 'संस्कृत शब्दाः',
-                          onTap: () => _showMessage(
+                          onTap: () => Navigator.push(
                             context,
-                            'Practice Words coming next 🚀',
+                            MaterialPageRoute(
+                              builder: (_) => const PracticeWordsScreen(),
+                            ),
                           ),
                         ),
 
