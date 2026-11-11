@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'learn_screen.dart';
 import 'practice_screen.dart';
+import 'practice_sentences_screen.dart';
 import 'practice_words_screen.dart';
 import '../widgets/bottom_nav.dart';
 
@@ -389,23 +390,16 @@ class HomeScreen extends StatelessWidget {
 
                         QuickLearningCard(
                           icon: Icons.description_outlined,
-                          title: 'Practice Shlokas',
-                          deva: 'श्लोक अभ्यासः',
-                          onTap: () => _showMessage(
+                          title: 'Practice Sentences',
+                          deva: 'वाक्य अभ्यासः',
+                          onTap: () => Navigator.push(
                             context,
-                            'Practice Shlokas coming next 🚀',
+                            MaterialPageRoute(
+                              builder: (_) => const PracticeSentencesScreen(),
+                            ),
                           ),
                         ),
 
-                        QuickLearningCard(
-                          icon: Icons.auto_awesome,
-                          title: 'Pronunciation Test',
-                          deva: 'AI Evaluation',
-                          onTap: () => _showMessage(
-                            context,
-                            'Pronunciation Test coming next 🚀',
-                          ),
-                        ),
                       ],
                     ),
 
@@ -422,11 +416,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  static void _showMessage(BuildContext context, String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
-  }
 }
 
 // ═══════════════════════════════════════════
