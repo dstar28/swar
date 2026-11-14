@@ -25,3 +25,6 @@ flutter:
   assets:
     - assets/sounds/vowels/
     - assets/sounds/consonants/
+    - assets/sounds/words/
+    - assets/sounds/words/swar/
+    - assets/sounds/words/vyanjan/
