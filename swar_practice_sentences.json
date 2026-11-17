@@ -1,0 +1,232 @@
+{
+  "sentences": [
+    {
+      "category": "vowels",
+      "category_sanskrit": "स्वर",
+      "sentences": [
+        {
+          "id": "sentence01",
+          "sanskrit": "अग्निः उज्ज्वलः अस्ति।",
+          "transliteration": "agniḥ ujjvalaḥ asti",
+          "meaning": "Fire is bright."
+        },
+        {
+          "id": "sentence02",
+          "sanskrit": "आकाशे सूर्यः प्रकाशते।",
+          "transliteration": "ākāśe sūryaḥ prakāśate",
+          "meaning": "The sun shines in the sky."
+        },
+        {
+          "id": "sentence03",
+          "sanskrit": "ऋषिः आश्रमे वसति।",
+          "transliteration": "ṛṣiḥ āśrame vasati",
+          "meaning": "The sage lives in the hermitage."
+        }
+      ]
+    },
+    {
+      "category": "velars",
+      "category_sanskrit": "क-वर्ग",
+      "sentences": [
+        {
+          "id": "sentence04",
+          "sanskrit": "काकः कमले क्रीडति।",
+          "transliteration": "kākaḥ kamale krīḍati",
+          "meaning": "The crow plays in/on the lotus."
+        },
+        {
+          "id": "sentence05",
+          "sanskrit": "गजः गङ्गायां गच्छति।",
+          "transliteration": "gajaḥ gaṅgāyāṃ gacchati",
+          "meaning": "The elephant goes to/in the Ganga."
+        },
+        {
+          "id": "sentence06",
+          "sanskrit": "खगः आकाशे उड्डयति।",
+          "transliteration": "khagaḥ ākāśe uḍḍayati",
+          "meaning": "The bird flies in the sky."
+        }
+      ]
+    },
+    {
+      "category": "palatals",
+      "category_sanskrit": "च-वर्ग",
+      "sentences": [
+        {
+          "id": "sentence07",
+          "sanskrit": "चन्द्रः छायां जनयति।",
+          "transliteration": "candraḥ chāyāṃ janayati",
+          "meaning": "The moon creates shade."
+        },
+        {
+          "id": "sentence08",
+          "sanskrit": "जलं जीवनस्य आधारः अस्ति।",
+          "transliteration": "jalaṃ jīvanasya ādhāraḥ asti",
+          "meaning": "Water is the basis of life."
+        },
+        {
+          "id": "sentence09",
+          "sanskrit": "ज्ञानी जनः सत्यं वदति।",
+          "transliteration": "jñānī janaḥ satyaṃ vadati",
+          "meaning": "A wise person speaks the truth."
+        }
+      ]
+    },
+    {
+      "category": "retroflexes",
+      "category_sanskrit": "ट-वर्ग",
+      "sentences": [
+        {
+          "id": "sentence10",
+          "sanskrit": "टङ्कः ध्वनिं करोति।",
+          "transliteration": "ṭaṅkaḥ dhvaniṃ karoti",
+          "meaning": "The coin makes a sound."
+        },
+        {
+          "id": "sentence11",
+          "sanskrit": "ठक्कुरः डमरुं वादयति।",
+          "transliteration": "ṭhakkuraḥ ḍamaruṃ vādayati",
+          "meaning": "The Thakkura plays the damaru."
+        },
+        {
+          "id": "sentence12",
+          "sanskrit": "वर्णेषु णकारः महत्त्वपूर्णः अस्ति।",
+          "transliteration": "varṇeṣu ṇakāraḥ mahattvapūrṇaḥ asti",
+          "meaning": "Among the sounds/letters, ṇa is important."
+        }
+      ]
+    },
+    {
+      "category": "dentals",
+      "category_sanskrit": "त-वर्ग",
+      "sentences": [
+        {
+          "id": "sentence13",
+          "sanskrit": "तत्त्वं धर्मस्य आधारः अस्ति।",
+          "transliteration": "tattvaṃ dharmasya ādhāraḥ asti",
+          "meaning": "Truth/principle is the foundation of dharma."
+        },
+        {
+          "id": "sentence14",
+          "sanskrit": "धर्मः जीवनं पवित्रं करोति।",
+          "transliteration": "dharmaḥ jīvanaṃ pavitraṃ karoti",
+          "meaning": "Dharma makes life sacred."
+        },
+        {
+          "id": "sentence15",
+          "sanskrit": "नदी तीव्रं वहति।",
+          "transliteration": "nadī tīvraṃ vahati",
+          "meaning": "The river flows swiftly."
+        }
+      ]
+    },
+    {
+      "category": "labials",
+      "category_sanskrit": "प-वर्ग",
+      "sentences": [
+        {
+          "id": "sentence16",
+          "sanskrit": "पवनः पुष्पाणि चालयति।",
+          "transliteration": "pavanaḥ puṣpāṇi cālayati",
+          "meaning": "The wind moves the flowers."
+        },
+        {
+          "id": "sentence17",
+          "sanskrit": "फलं पौष्टिकम् अस्ति।",
+          "transliteration": "phalaṃ pauṣṭikam asti",
+          "meaning": "The fruit is nutritious."
+        },
+        {
+          "id": "sentence18",
+          "sanskrit": "माता बालं पालयति।",
+          "transliteration": "mātā bālaṃ pālayati",
+          "meaning": "The mother cares for the child."
+        }
+      ]
+    },
+    {
+      "category": "semivowels",
+      "category_sanskrit": "अन्तःस्थ",
+      "sentences": [
+        {
+          "id": "sentence19",
+          "sanskrit": "योगी यज्ञे भागं गृह्णाति।",
+          "transliteration": "yogī yajñe bhāgaṃ gṛhṇāti",
+          "meaning": "The yogi takes part in the yajña."
+        },
+        {
+          "id": "sentence20",
+          "sanskrit": "रामः वनं गच्छति।",
+          "transliteration": "rāmaḥ vanaṃ gacchati",
+          "meaning": "Rama goes to the forest."
+        },
+        {
+          "id": "sentence21",
+          "sanskrit": "लता वृक्षम् आरोहति।",
+          "transliteration": "latā vṛkṣam ārohati",
+          "meaning": "The creeper climbs the tree."
+        },
+        {
+          "id": "sentence22",
+          "sanskrit": "वाणी मधुरा भवति।",
+          "transliteration": "vāṇī madhurā bhavati",
+          "meaning": "Speech is sweet."
+        }
+      ]
+    },
+    {
+      "category": "sibilants",
+      "category_sanskrit": "ऊष्म",
+      "sentences": [
+        {
+          "id": "sentence23",
+          "sanskrit": "शिवः शान्तिं ददाति।",
+          "transliteration": "śivaḥ śāntiṃ dadāti",
+          "meaning": "Shiva gives peace."
+        },
+        {
+          "id": "sentence24",
+          "sanskrit": "षट् छात्राः उपस्थिताः सन्ति।",
+          "transliteration": "ṣaṭ chātrāḥ upasthitāḥ santi",
+          "meaning": "Six students are present."
+        },
+        {
+          "id": "sentence25",
+          "sanskrit": "सत्यं सर्वदा वद।",
+          "transliteration": "satyaṃ sarvadā vada",
+          "meaning": "Always speak the truth."
+        }
+      ]
+    },
+    {
+      "category": "mixed",
+      "category_sanskrit": "मिश्र",
+      "sentences": [
+        {
+          "id": "sentence26",
+          "sanskrit": "संस्कृतभाषा प्राचीना च समृद्धा च अस्ति।",
+          "transliteration": "saṃskṛtabhāṣā prācīnā ca samṛddhā ca asti",
+          "meaning": "The Sanskrit language is ancient and rich."
+        },
+        {
+          "id": "sentence27",
+          "sanskrit": "विद्या विनयं ददाति।",
+          "transliteration": "vidyā vinayaṃ dadāti",
+          "meaning": "Knowledge gives humility."
+        },
+        {
+          "id": "sentence28",
+          "sanskrit": "गुरुः शिष्यं ज्ञानेन प्रेरयति।",
+          "transliteration": "guruḥ śiṣyaṃ jñānena prerayati",
+          "meaning": "The teacher inspires the student with knowledge."
+        },
+        {
+          "id": "sentence29",
+          "sanskrit": "सर्वे भवन्तु सुखिनः। सर्वे सन्तु निरामयाः।",
+          "transliteration": "sarve bhavantu sukhinaḥ; sarve santu nirāmayāḥ",
+          "meaning": "May all be happy. May all be free from illness."
+        }
+      ]
+    }
+  ]
+}

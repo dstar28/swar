@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/bottom_nav.dart';
@@ -27,6 +28,40 @@ class _SentenceCategory {
     required this.sentences,
   });
 }
+
+// Sentence audio paths are relative to Flutter's assets/ directory.
+// A null entry means that recording is not available yet.
+const Map<String, String?> _sentenceAudio = {
+  'sentence01': 'sounds/sentences/vowels/sentence01.wav',
+  'sentence02': 'sounds/sentences/vowels/sentence02.wav',
+  'sentence03': 'sounds/sentences/vowels/sentence03.wav',
+  'sentence04': 'sounds/sentences/velars/sentence04.wav',
+  'sentence05': 'sounds/sentences/velars/sentence05.wav',
+  'sentence06': 'sounds/sentences/velars/sentence06.wav',
+  'sentence07': 'sounds/sentences/palatals/sentence07.wav',
+  'sentence08': 'sounds/sentences/palatals/sentence08.wav',
+  'sentence09': 'sounds/sentences/palatals/sentence09.wav',
+  'sentence10': 'sounds/sentences/retroflexes/sentence10.wav',
+  'sentence11': 'sounds/sentences/retroflexes/sentence11.wav',
+  'sentence12': 'sounds/sentences/retroflexes/sentence12.wav',
+  'sentence13': 'sounds/sentences/dentals/sentence13.wav',
+  'sentence14': 'sounds/sentences/dentals/sentence14.wav',
+  'sentence15': 'sounds/sentences/dentals/sentence15.wav',
+  'sentence16': 'sounds/sentences/labials/sentence16.wav',
+  'sentence17': 'sounds/sentences/labials/sentence17.wav',
+  'sentence18': 'sounds/sentences/labials/sentence18.wav',
+  'sentence19': 'sounds/sentences/semivowels/sentence19.wav',
+  'sentence20': 'sounds/sentences/semivowels/sentence20.wav',
+  'sentence21': 'sounds/sentences/semivowels/sentence21.wav',
+  'sentence22': 'sounds/sentences/semivowels/sentence22.wav',
+  'sentence23': 'sounds/sentences/sibilants/sentence23.wav',
+  'sentence24': 'sounds/sentences/sibilants/sentence24.wav',
+  'sentence25': 'sounds/sentences/sibilants/sentence25.wav',
+  'sentence26': 'sounds/sentences/mixed/sentence26.wav',
+  'sentence27': 'sounds/sentences/mixed/sentence27.wav',
+  'sentence28': 'sounds/sentences/mixed/sentence28.wav',
+  'sentence29': 'sounds/sentences/mixed/sentence29.wav',
+};
 
 class PracticeSentencesScreen extends StatelessWidget {
   const PracticeSentencesScreen({super.key});
@@ -579,6 +614,7 @@ class _SentenceDetailScreen extends StatelessWidget {
                   _SentenceAudioControl(
                     label: 'Listen — ${sentence.sanskrit}',
                     subtitle: 'Traditional articulation',
+                    audioAsset: _sentenceAudio[sentence.id],
                   ),
                   const SizedBox(height: 24),
                   const _SentenceSectionLabel(
@@ -647,124 +683,163 @@ class _SentenceDetailScreen extends StatelessWidget {
 class _SentenceAudioControl extends StatefulWidget {
   final String label;
   final String subtitle;
+  final String? audioAsset;
 
-  const _SentenceAudioControl({required this.label, required this.subtitle});
+  const _SentenceAudioControl({
+    required this.label,
+    required this.subtitle,
+    this.audioAsset,
+  });
 
   @override
   State<_SentenceAudioControl> createState() => _SentenceAudioControlState();
 }
 
-class _SentenceAudioControlState extends State<_SentenceAudioControl>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
+class _SentenceAudioControlState extends State<_SentenceAudioControl> {
+  late final AudioPlayer _audioPlayer;
   bool _isPlaying = false;
+  Duration _duration = Duration.zero;
+  Duration _position = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 5))
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed && mounted) {
-              setState(() => _isPlaying = false);
-            }
-          });
+    _audioPlayer = AudioPlayer();
+
+    _audioPlayer.onPlayerComplete.listen((_) {
+      if (!mounted) return;
+      setState(() {
+        _isPlaying = false;
+        _position = Duration.zero;
+      });
+    });
+
+    _audioPlayer.onDurationChanged.listen((duration) {
+      if (!mounted) return;
+      setState(() => _duration = duration);
+    });
+
+    _audioPlayer.onPositionChanged.listen((position) {
+      if (!mounted) return;
+      setState(() => _position = position);
+    });
+
+    _audioPlayer.onPlayerStateChanged.listen((state) {
+      if (!mounted) return;
+      setState(() => _isPlaying = state == PlayerState.playing);
+    });
   }
 
-  void _toggle() {
-    if (_isPlaying) {
-      _controller.stop();
+  Future<void> _toggle() async {
+    final asset = widget.audioAsset;
+    if (asset == null) return;
+
+    try {
+      if (_isPlaying) {
+        await _audioPlayer.pause();
+      } else if (_position > Duration.zero && _position < _duration) {
+        await _audioPlayer.resume();
+      } else {
+        await _audioPlayer.stop();
+        await _audioPlayer.play(AssetSource(asset));
+      }
+    } catch (error) {
+      if (!mounted) return;
       setState(() => _isPlaying = false);
-      return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Could not play this recording.')),
+      );
+      debugPrint('Sentence audio error: $error');
     }
-    if (_controller.isCompleted) {
-      _controller.value = 0;
-    }
-    setState(() => _isPlaying = true);
-    _controller.forward();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, _) => Container(
-        height: 70,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: const Color(0x0AE7A13B),
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: PracticeSentencesScreen.border),
-        ),
-        child: Row(
-          children: [
-            Material(
-              color: PracticeSentencesScreen.blue,
-              shape: const CircleBorder(),
-              child: InkWell(
-                customBorder: const CircleBorder(),
-                onTap: _toggle,
-                child: SizedBox(
-                  width: 46,
-                  height: 46,
-                  child: Icon(
-                    _isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                    color: Colors.white,
-                    size: 29,
-                  ),
+    final hasAudio = widget.audioAsset != null;
+    final progress = _duration.inMilliseconds == 0
+        ? 0.0
+        : (_position.inMilliseconds / _duration.inMilliseconds).clamp(0.0, 1.0);
+
+    return Container(
+      height: 70,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: const Color(0x0AE7A13B),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: PracticeSentencesScreen.border),
+      ),
+      child: Row(
+        children: [
+          Material(
+            color: PracticeSentencesScreen.blue,
+            shape: const CircleBorder(),
+            child: InkWell(
+              customBorder: const CircleBorder(),
+              onTap: hasAudio ? _toggle : null,
+              child: SizedBox(
+                width: 46,
+                height: 46,
+                child: Icon(
+                  !hasAudio
+                      ? Icons.volume_off_rounded
+                      : (_isPlaying
+                            ? Icons.pause_rounded
+                            : Icons.play_arrow_rounded),
+                  color: Colors.white,
+                  size: 29,
                 ),
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: PracticeSentencesScreen.brown,
-                      fontWeight: FontWeight.w600,
-                    ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: PracticeSentencesScreen.brown,
+                    fontWeight: FontWeight.w600,
                   ),
-                  const SizedBox(height: 3),
-                  Text(
-                    _isPlaying
-                        ? 'Audio preview · add recording later'
-                        : widget.subtitle,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: Color(0xFF77716A),
-                    ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  !hasAudio
+                      ? 'Recording not available yet'
+                      : (_isPlaying ? 'Playing audio' : widget.subtitle),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Color(0xFF77716A),
                   ),
-                  const SizedBox(height: 7),
-                  LinearProgressIndicator(
-                    value: _controller.value,
-                    minHeight: 5,
-                    backgroundColor: const Color(0x22A89572),
-                    color: PracticeSentencesScreen.gold,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 7),
+                LinearProgressIndicator(
+                  value: progress,
+                  minHeight: 5,
+                  backgroundColor: const Color(0x22A89572),
+                  color: PracticeSentencesScreen.gold,
+                ),
+              ],
             ),
-            const SizedBox(width: 10),
-            const Icon(
-              Icons.volume_up_outlined,
-              size: 18,
-              color: Color(0xFF776B5D),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(width: 10),
+          const Icon(
+            Icons.volume_up_outlined,
+            size: 18,
+            color: Color(0xFF776B5D),
+          ),
+        ],
       ),
     );
   }

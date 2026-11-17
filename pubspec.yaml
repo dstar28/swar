@@ -28,3 +28,12 @@ flutter:
     - assets/sounds/words/
     - assets/sounds/words/swar/
     - assets/sounds/words/vyanjan/
+    - assets/sounds/sentences/vowels/
+    - assets/sounds/sentences/velars/
+    - assets/sounds/sentences/palatals/
+    - assets/sounds/sentences/retroflexes/
+    - assets/sounds/sentences/dentals/
+    - assets/sounds/sentences/labials/
+    - assets/sounds/sentences/semivowels/
+    - assets/sounds/sentences/sibilants/
+    - assets/sounds/sentences/mixed/
