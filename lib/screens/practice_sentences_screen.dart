@@ -3,18 +3,28 @@ import 'package:flutter/material.dart';
 import '../widgets/bottom_nav.dart';
 
 class _Sentence {
+  final String id;
   final String sanskrit;
   final String transliteration;
   final String meaning;
-  final List<(String, String)> words;
-  final String tip;
 
   const _Sentence({
+    required this.id,
     required this.sanskrit,
     required this.transliteration,
     required this.meaning,
-    required this.words,
-    required this.tip,
+  });
+}
+
+class _SentenceCategory {
+  final String name;
+  final String sanskritName;
+  final List<_Sentence> sentences;
+
+  const _SentenceCategory({
+    required this.name,
+    required this.sanskritName,
+    required this.sentences,
   });
 }
 
@@ -28,97 +38,234 @@ class PracticeSentencesScreen extends StatelessWidget {
   static const gold = Color(0xFFC79B45);
   static const border = Color(0xFFE7DECD);
 
-  static const sentences = [
-    _Sentence(
-      sanskrit: 'नमस्ते।',
-      transliteration: 'namaste',
-      meaning: 'Hello.',
-      words: [('नमस्ते', 'hello')],
-      tip: 'Say “na-ma-ste” smoothly, keeping each syllable clear.',
-    ),
-    _Sentence(
-      sanskrit: 'मम नाम रामः।',
-      transliteration: 'mama nāma rāmaḥ',
-      meaning: 'My name is Rama.',
-      words: [('मम', 'my'), ('नाम', 'name'), ('रामः', 'Rama')],
-      tip: 'Pause slightly after “मम” and pronounce each word evenly.',
-    ),
-    _Sentence(
-      sanskrit: 'अहं छात्रः अस्मि।',
-      transliteration: 'ahaṃ chātraḥ asmi',
-      meaning: 'I am a student.',
-      words: [('अहम्', 'I'), ('छात्रः', 'student'), ('अस्मि', 'am')],
-      tip: 'Give “छ” a clear breath and pronounce each word distinctly.',
-    ),
-    _Sentence(
-      sanskrit: 'भवान् कथम् अस्ति?',
-      transliteration: 'bhavān katham asti',
-      meaning: 'How are you?',
-      words: [('भवान्', 'you (formal)'), ('कथम्', 'how'), ('अस्ति', 'are')],
-      tip:
-          'Keep the question flowing and raise your voice slightly at the end.',
-    ),
-    _Sentence(
-      sanskrit: 'अहं जलं पिबामि।',
-      transliteration: 'ahaṃ jalaṃ pibāmi',
-      meaning: 'I drink water.',
-      words: [('अहम्', 'I'), ('जलम्', 'water'), ('पिबामि', 'drink')],
-      tip:
-          'Pronounce each word distinctly and keep the final vowel in “पिबामि”.',
-    ),
-    _Sentence(
-      sanskrit: 'बालकः पुस्तकं पठति।',
-      transliteration: 'bālakaḥ pustakaṃ paṭhati',
-      meaning: 'The boy reads a book.',
-      words: [('बालकः', 'boy'), ('पुस्तकम्', 'book'), ('पठति', 'reads')],
-      tip: 'Say “पुस्तकम्” in three clear beats: pus-ta-kam.',
-    ),
-    _Sentence(
-      sanskrit: 'बालिका पत्रं लिखति।',
-      transliteration: 'bālikā patraṃ likhati',
-      meaning: 'The girl writes a letter.',
-      words: [('बालिका', 'girl'), ('पत्रम्', 'letter'), ('लिखति', 'writes')],
-      tip: 'Hold the long “आ” in “बालिका” and finish “लिखति” clearly.',
-    ),
-    _Sentence(
-      sanskrit: 'वयं संस्कृतं पठामः।',
-      transliteration: 'vayaṃ saṃskṛtaṃ paṭhāmaḥ',
-      meaning: 'We study Sanskrit.',
-      words: [('वयम्', 'we'), ('संस्कृतम्', 'Sanskrit'), ('पठामः', 'study')],
-      tip:
-          'Keep “संस्कृतम्” connected and give the aspirated “ठ” a clear breath.',
-    ),
-    _Sentence(
-      sanskrit: 'सूर्यः उदेति।',
-      transliteration: 'sūryaḥ udeti',
-      meaning: 'The sun rises.',
-      words: [('सूर्यः', 'sun'), ('उदेति', 'rises')],
-      tip: 'Hold the long “ऊ” in “सूर्यः” before saying “उदेति”.',
-    ),
-    _Sentence(
-      sanskrit: 'पक्षिणः आकाशे उड्डयन्ति।',
-      transliteration: 'pakṣiṇaḥ ākāśe uḍḍayanti',
-      meaning: 'Birds fly in the sky.',
-      words: [
-        ('पक्षिणः', 'birds'),
-        ('आकाशे', 'in the sky'),
-        ('उड्डयन्ति', 'fly'),
+  static const categories = [
+    _SentenceCategory(
+      name: 'Vowels',
+      sanskritName: 'स्वर',
+      sentences: [
+        _Sentence(
+          id: 'sentence01',
+          sanskrit: 'अग्निः उज्ज्वलः अस्ति।',
+          transliteration: 'agniḥ ujjvalaḥ asti',
+          meaning: 'Fire is bright.',
+        ),
+        _Sentence(
+          id: 'sentence02',
+          sanskrit: 'आकाशे सूर्यः प्रकाशते।',
+          transliteration: 'ākāśe sūryaḥ prakāśate',
+          meaning: 'The sun shines in the sky.',
+        ),
+        _Sentence(
+          id: 'sentence03',
+          sanskrit: 'ऋषिः आश्रमे वसति।',
+          transliteration: 'ṛṣiḥ āśrame vasati',
+          meaning: 'The sage lives in the hermitage.',
+        ),
       ],
-      tip: 'Break the sentence into three parts, then say it continuously.',
     ),
-    _Sentence(
-      sanskrit: 'फलानि मधुराणि सन्ति।',
-      transliteration: 'phalāni madhurāṇi santi',
-      meaning: 'The fruits are sweet.',
-      words: [('फलानि', 'fruits'), ('मधुराणि', 'sweet'), ('सन्ति', 'are')],
-      tip: 'Keep the long vowels in “मधुराणि” clear and steady.',
+    _SentenceCategory(
+      name: 'Velars',
+      sanskritName: 'क-वर्ग',
+      sentences: [
+        _Sentence(
+          id: 'sentence04',
+          sanskrit: 'काकः कमले क्रीडति।',
+          transliteration: 'kākaḥ kamale krīḍati',
+          meaning: 'The crow plays in/on the lotus.',
+        ),
+        _Sentence(
+          id: 'sentence05',
+          sanskrit: 'गजः गङ्गायां गच्छति।',
+          transliteration: 'gajaḥ gaṅgāyāṃ gacchati',
+          meaning: 'The elephant goes to/in the Ganga.',
+        ),
+        _Sentence(
+          id: 'sentence06',
+          sanskrit: 'खगः आकाशे उड्डयति।',
+          transliteration: 'khagaḥ ākāśe uḍḍayati',
+          meaning: 'The bird flies in the sky.',
+        ),
+      ],
     ),
-    _Sentence(
-      sanskrit: 'धन्यवादः।',
-      transliteration: 'dhanyavādaḥ',
-      meaning: 'Thank you.',
-      words: [('धन्यवादः', 'thank you')],
-      tip: 'Say “धन्यवादः” slowly and finish with a soft breath.',
+    _SentenceCategory(
+      name: 'Palatals',
+      sanskritName: 'च-वर्ग',
+      sentences: [
+        _Sentence(
+          id: 'sentence07',
+          sanskrit: 'चन्द्रः छायां जनयति।',
+          transliteration: 'candraḥ chāyāṃ janayati',
+          meaning: 'The moon creates shade.',
+        ),
+        _Sentence(
+          id: 'sentence08',
+          sanskrit: 'जलं जीवनस्य आधारः अस्ति।',
+          transliteration: 'jalaṃ jīvanasya ādhāraḥ asti',
+          meaning: 'Water is the basis of life.',
+        ),
+        _Sentence(
+          id: 'sentence09',
+          sanskrit: 'ज्ञानी जनः सत्यं वदति।',
+          transliteration: 'jñānī janaḥ satyaṃ vadati',
+          meaning: 'A wise person speaks the truth.',
+        ),
+      ],
+    ),
+    _SentenceCategory(
+      name: 'Retroflexes',
+      sanskritName: 'ट-वर्ग',
+      sentences: [
+        _Sentence(
+          id: 'sentence10',
+          sanskrit: 'टङ्कः ध्वनिं करोति।',
+          transliteration: 'ṭaṅkaḥ dhvaniṃ karoti',
+          meaning: 'The coin makes a sound.',
+        ),
+        _Sentence(
+          id: 'sentence11',
+          sanskrit: 'ठक्कुरः डमरुं वादयति।',
+          transliteration: 'ṭhakkuraḥ ḍamaruṃ vādayati',
+          meaning: 'The Thakkura plays the damaru.',
+        ),
+        _Sentence(
+          id: 'sentence12',
+          sanskrit: 'वर्णेषु णकारः महत्त्वपूर्णः अस्ति।',
+          transliteration: 'varṇeṣu ṇakāraḥ mahattvapūrṇaḥ asti',
+          meaning: 'Among the sounds/letters, ṇa is important.',
+        ),
+      ],
+    ),
+    _SentenceCategory(
+      name: 'Dentals',
+      sanskritName: 'त-वर्ग',
+      sentences: [
+        _Sentence(
+          id: 'sentence13',
+          sanskrit: 'तत्त्वं धर्मस्य आधारः अस्ति।',
+          transliteration: 'tattvaṃ dharmasya ādhāraḥ asti',
+          meaning: 'Truth/principle is the foundation of dharma.',
+        ),
+        _Sentence(
+          id: 'sentence14',
+          sanskrit: 'धर्मः जीवनं पवित्रं करोति।',
+          transliteration: 'dharmaḥ jīvanaṃ pavitraṃ karoti',
+          meaning: 'Dharma makes life sacred.',
+        ),
+        _Sentence(
+          id: 'sentence15',
+          sanskrit: 'नदी तीव्रं वहति।',
+          transliteration: 'nadī tīvraṃ vahati',
+          meaning: 'The river flows swiftly.',
+        ),
+      ],
+    ),
+    _SentenceCategory(
+      name: 'Labials',
+      sanskritName: 'प-वर्ग',
+      sentences: [
+        _Sentence(
+          id: 'sentence16',
+          sanskrit: 'पवनः पुष्पाणि चालयति।',
+          transliteration: 'pavanaḥ puṣpāṇi cālayati',
+          meaning: 'The wind moves the flowers.',
+        ),
+        _Sentence(
+          id: 'sentence17',
+          sanskrit: 'फलं पौष्टिकम् अस्ति।',
+          transliteration: 'phalaṃ pauṣṭikam asti',
+          meaning: 'The fruit is nutritious.',
+        ),
+        _Sentence(
+          id: 'sentence18',
+          sanskrit: 'माता बालं पालयति।',
+          transliteration: 'mātā bālaṃ pālayati',
+          meaning: 'The mother cares for the child.',
+        ),
+      ],
+    ),
+    _SentenceCategory(
+      name: 'Semivowels',
+      sanskritName: 'अन्तःस्थ',
+      sentences: [
+        _Sentence(
+          id: 'sentence19',
+          sanskrit: 'योगी यज्ञे भागं गृह्णाति।',
+          transliteration: 'yogī yajñe bhāgaṃ gṛhṇāti',
+          meaning: 'The yogi takes part in the yajña.',
+        ),
+        _Sentence(
+          id: 'sentence20',
+          sanskrit: 'रामः वनं गच्छति।',
+          transliteration: 'rāmaḥ vanaṃ gacchati',
+          meaning: 'Rama goes to the forest.',
+        ),
+        _Sentence(
+          id: 'sentence21',
+          sanskrit: 'लता वृक्षम् आरोहति।',
+          transliteration: 'latā vṛkṣam ārohati',
+          meaning: 'The creeper climbs the tree.',
+        ),
+        _Sentence(
+          id: 'sentence22',
+          sanskrit: 'वाणी मधुरा भवति।',
+          transliteration: 'vāṇī madhurā bhavati',
+          meaning: 'Speech is sweet.',
+        ),
+      ],
+    ),
+    _SentenceCategory(
+      name: 'Sibilants',
+      sanskritName: 'ऊष्म',
+      sentences: [
+        _Sentence(
+          id: 'sentence23',
+          sanskrit: 'शिवः शान्तिं ददाति।',
+          transliteration: 'śivaḥ śāntiṃ dadāti',
+          meaning: 'Shiva gives peace.',
+        ),
+        _Sentence(
+          id: 'sentence24',
+          sanskrit: 'षट् छात्राः उपस्थिताः सन्ति।',
+          transliteration: 'ṣaṭ chātrāḥ upasthitāḥ santi',
+          meaning: 'Six students are present.',
+        ),
+        _Sentence(
+          id: 'sentence25',
+          sanskrit: 'सत्यं सर्वदा वद।',
+          transliteration: 'satyaṃ sarvadā vada',
+          meaning: 'Always speak the truth.',
+        ),
+      ],
+    ),
+    _SentenceCategory(
+      name: 'Mixed',
+      sanskritName: 'मिश्र',
+      sentences: [
+        _Sentence(
+          id: 'sentence26',
+          sanskrit: 'संस्कृतभाषा प्राचीना च समृद्धा च अस्ति।',
+          transliteration: 'saṃskṛtabhāṣā prācīnā ca samṛddhā ca asti',
+          meaning: 'The Sanskrit language is ancient and rich.',
+        ),
+        _Sentence(
+          id: 'sentence27',
+          sanskrit: 'विद्या विनयं ददाति।',
+          transliteration: 'vidyā vinayaṃ dadāti',
+          meaning: 'Knowledge gives humility.',
+        ),
+        _Sentence(
+          id: 'sentence28',
+          sanskrit: 'गुरुः शिष्यं ज्ञानेन प्रेरयति।',
+          transliteration: 'guruḥ śiṣyaṃ jñānena prerayati',
+          meaning: 'The teacher inspires the student with knowledge.',
+        ),
+        _Sentence(
+          id: 'sentence29',
+          sanskrit: 'सर्वे भवन्तु सुखिनः। सर्वे सन्तु निरामयाः।',
+          transliteration: 'sarve bhavantu sukhinaḥ; sarve santu nirāmayāḥ',
+          meaning: 'May all be happy. May all be free from illness.',
+        ),
+      ],
     ),
   ];
 
@@ -131,34 +278,44 @@ class PracticeSentencesScreen extends StatelessWidget {
           children: [
             const _SentenceHeader(),
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(20, 18, 20, 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const _SentenceSectionLabel(
-                      title: 'वाक्यानि',
-                      subtitle: 'SANSKRIT SENTENCES · 12 SENTENCES',
-                    ),
-                    const SizedBox(height: 12),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 12,
-                            childAspectRatio: 0.92,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final crossAxisCount = constraints.maxWidth < 600 ? 2 : 4;
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(20, 18, 20, 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (final category in categories) ...[
+                          _SentenceSectionLabel(
+                            title: category.sanskritName,
+                            subtitle:
+                                '${category.name.toUpperCase()} · '
+                                '${category.sentences.length} SENTENCES',
                           ),
-                      itemCount: sentences.length,
-                      itemBuilder: (context, index) => _SentenceTile(
-                        number: index + 1,
-                        sentence: sentences[index],
-                      ),
+                          const SizedBox(height: 12),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 12,
+                                  childAspectRatio: 1.05,
+                                ),
+                            itemCount: category.sentences.length,
+                            itemBuilder: (context, index) => _SentenceTile(
+                              number: category.sentences[index].id.substring(8),
+                              sentence: category.sentences[index],
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
             const BottomNav(currentIndex: 2),
@@ -263,7 +420,7 @@ class _SentenceSectionLabel extends StatelessWidget {
 }
 
 class _SentenceTile extends StatelessWidget {
-  final int number;
+  final String number;
   final _Sentence sentence;
 
   const _SentenceTile({required this.number, required this.sentence});
@@ -300,7 +457,7 @@ class _SentenceTile extends StatelessWidget {
                 top: 0,
                 left: 0,
                 child: Text(
-                  '$number',
+                  number,
                   style: const TextStyle(
                     fontSize: 10,
                     color: PracticeSentencesScreen.gold,
@@ -351,6 +508,9 @@ class _SentenceDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sanskritWords = sentence.sanskrit.split(RegExp(r'\s+'));
+    final transliterationWords = sentence.transliteration.split(RegExp(r'\s+'));
+
     return Scaffold(
       backgroundColor: PracticeSentencesScreen.background,
       body: SafeArea(
@@ -422,12 +582,12 @@ class _SentenceDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   const _SentenceSectionLabel(
-                    title: 'शब्दार्थः',
-                    subtitle: 'WORD-BY-WORD MEANING',
+                    title: 'शब्दविभागः',
+                    subtitle: 'WORD-BY-WORD READING',
                   ),
                   const SizedBox(height: 12),
-                  ...sentence.words.indexed.map(
-                    (entry) => Padding(
+                  ...sanskritWords.indexed.map((entry) {
+                    return Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Container(
                         padding: const EdgeInsets.all(14),
@@ -454,102 +614,31 @@ class _SentenceDetailScreen extends StatelessWidget {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                entry.$2.$1,
+                                entry.$2,
                                 style: const TextStyle(
                                   fontSize: 18,
                                   color: PracticeSentencesScreen.brown,
                                 ),
                               ),
                             ),
-                            Text(
-                              entry.$2.$2,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Color(0xFF77716A),
+                            if (entry.$1 < transliterationWords.length)
+                              Text(
+                                transliterationWords[entry.$1],
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xFF77716A),
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: const Color(0x14E7A13B),
-                      borderRadius: BorderRadius.circular(22),
-                      border: Border.all(color: const Color(0x66C79B45)),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.lightbulb_outline_rounded,
-                          color: PracticeSentencesScreen.gold,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            sentence.tip,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              height: 1.4,
-                              color: PracticeSentencesScreen.brown,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                    );
+                  }),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _SentenceDetailHeader extends StatelessWidget {
-  final _Sentence sentence;
-
-  const _SentenceDetailHeader({required this.sentence});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 8, 16, 8),
-      decoration: const BoxDecoration(
-        color: Color(0xFFFFFCF5),
-        border: Border(
-          bottom: BorderSide(color: PracticeSentencesScreen.border),
-        ),
-      ),
-      child: Row(
-        children: [
-          IconButton(
-            tooltip: 'Back to sentences',
-            onPressed: () => Navigator.maybePop(context),
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: PracticeSentencesScreen.brown,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              sentence.sanskrit,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: PracticeSentencesScreen.brown,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -676,6 +765,50 @@ class _SentenceAudioControlState extends State<_SentenceAudioControl>
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _SentenceDetailHeader extends StatelessWidget {
+  final _Sentence sentence;
+
+  const _SentenceDetailHeader({required this.sentence});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 8, 16, 8),
+      decoration: const BoxDecoration(
+        color: Color(0xFFFFFCF5),
+        border: Border(
+          bottom: BorderSide(color: PracticeSentencesScreen.border),
+        ),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            tooltip: 'Back to sentences',
+            onPressed: () => Navigator.maybePop(context),
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              color: PracticeSentencesScreen.brown,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              sentence.sanskrit,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: PracticeSentencesScreen.brown,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
